@@ -9,7 +9,7 @@ from VectorParser import *
 file_name = ""
 has_save = False
 #-----------------------------------------------------------------------------
-#           EDITOR  
+#           EDITOR  CLASS
 #-----------------------------------------------------------------------------
 class TextLineNumbers(tk.Canvas):
     

@@ -1,7 +1,10 @@
 # Regular expression library
 import re
 
-# List of the instructions with format F
+###########################################################################
+# Global dictionary used to associate the mnemonic of the instructions    #
+# with format F to its corresponding operational code                     #
+###########################################################################
 format_f_instructions = {
 
     'VADD': '0',
@@ -16,14 +19,20 @@ format_f_instructions = {
     'VSET': '9'
 }
 
-# List of the instructions with format I
+###########################################################################
+# Global dictionary used to associate the mnemonic of the instructions    #
+# with format M to its corresponding operational code                     #
+###########################################################################
 format_m_instructions = {
 
     'VLDR': 'a',
     'VSTR': 'b'
 }
 
-# List of the instructions with format I
+###########################################################################
+# Global dictionary used to associate the mnemonic of the instructions    #
+# with format I to its corresponding operational code                     #
+###########################################################################
 format_i_instructions = {
 
     'ADD': 'c',
@@ -32,6 +41,26 @@ format_i_instructions = {
     'LDR': 'f'
 }
 
+###########################################################################
+# Function that parse the operands of a instructions                      #
+# following the format F                                                  #
+#                                                                         #
+# Inputs:                                                                 #
+#       operands: string that contains the instruction without            #
+#                 the mnemonic                                            #
+#       use_va: boolean variable that indicates if the instruction        #
+#               use three explicitly defined operands or only two         #
+#                                                                         #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_operands_format_f(operands,use_va):
 
     # Variable used to store the hexadecimal code of the instruction
@@ -143,7 +172,26 @@ def parse_operands_format_f(operands,use_va):
     # Return success code and the hexadecimal code of the operands
     return [0,hex_code]
         
-
+###########################################################################
+# Function that parse the operands of a instructions                      #
+# following the format I                                                  #
+#                                                                         #
+# Inputs:                                                                 #
+#       operands: string that contains the instruction without            #
+#                 the mnemonic                                            #
+#       use_ra: boolean variable that indicates if the instruction        #
+#               use three explicitly defined operands or only two         #
+#                                                                         #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_operands_format_i(operands, use_ra):
 
     # Variable used to store the hexadecimal code of the instruction
@@ -248,6 +296,23 @@ def parse_operands_format_i(operands, use_ra):
     # Return success code and the hexadecimal code of the operands
     return [0,hex_code]
 
+###########################################################################
+# Function that parse the operands of a instructions                      #
+# following the format M                                                  #
+#                                                                         #
+# Inputs:                                                                 #
+#       operands: string that contains the instruction without            #
+#                 the mnemonic                                            #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_operands_format_m(operands):
 
     # Variable used to store the hexadecimal code of the instruction
@@ -328,6 +393,21 @@ def parse_operands_format_m(operands):
     # Return success code and the hexadecimal code of the operands
     return [0,hex_code]
 
+###########################################################################
+# Function that parse one instruction depending on its format             #
+#                                                                         # 
+# Inputs:                                                                 #
+#       line: string that contains the instruction in assembly syntax     #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_instruction(line):
 
     # Separate the instruction mnemonic from the operands
@@ -416,23 +496,180 @@ def parse_instruction(line):
         
         return [-1, "Instruction not recognized"]
 
+###########################################################################
+# Function that reads all the user program and search for pragmas to      #
+# resolved and comments and blank spaces to remove                        # 
+#                                                                         #
+# Inputs:                                                                 #
+#       user_program: list with strings that contains all the             # 
+#                     instructions of the user program                    #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_pragma(user_program):
 
+    # Save the pragma begin pattern for compare
+    pragma_begin = re.compile("#pragma_for_begin\((\d+)\)")
+
+    # Save the pragma end pattern for compare
+    pragma_end = re.compile("#pragma_for_end")
+
+    # List without blank spaces, comments or
+    # unresolved pragmas
     only_instructions = []
-    
+
+    # Number of the line that is being analyzed
+    line_number = 1
+
+    # Instructions stack for deal with nested pragmas
+    pragma_stack = []
+
+    # Iterations values stack for deal with nested pragmas
+    iterations_stack = []
+
+    # Analyze all the user program looking for unresolved pragmas,
+    # blank spaces or comments to remove
     for line in user_program:
 
-        # Check if the line is a blank space
-        # or the line is a comment
-        if (line.strip()
-            and line[0:2] != '//'
-            and line[0] != '#'):
+        # Check if the line is not a blank space and begins with #
+        if line.strip() and line[0] == '#':
 
-            only_instructions += [line]
-            
-    return only_instructions
+            # Compare the line against the pragma begin pattern
+            # if match the extract the number of iterations
+            pragma_iterations = pragma_begin.findall(line)
 
-# Main function used for parse the assembly code
+            # Check if there is a match with the pragma begin pattern
+            if len(pragma_iterations) == 1:
+
+                # Add a list in top of the pragma instruction stack
+                pragma_stack = [[]] + pragma_stack
+
+                # Get the number of iterations associated with
+                # the list in the top of the pragma instrucion stack
+                copies = int(pragma_iterations[0])
+
+                # Check that the number of iterations makes sense
+                if(copies <= 1):
+
+                    # Return error code and error message
+                    return [-1,line_number,"Pragma iterations must be greater than 1"]
+
+                # If the number of iterations makes sense
+                # then is added to the top of the pragma iterations stack
+                iterations_stack = [copies] + iterations_stack
+
+            # Check if there is a match with the pragma end pattern
+            elif len(pragma_end.findall(line)) > 0:
+
+                # In this case the program find a pragma end and
+                # the stack has not been initialized so this mean
+                # the user end a pragma without begin it first
+                if len(pragma_stack) == 0:
+                    
+                    # Return the error code and error message
+                    return [-1,line_number,"Pragma end without begin"]
+        
+                # List to hold instructions that will be
+                # repeated n times
+                expand_instructions = []
+                
+                # Copy the same block n times using the value
+                # in the top of the iterations stack
+                for iteration in range(0, iterations_stack[0]):
+
+                    # Copy the set of instruction of the pragma
+                    # in top of the stack
+                    expand_instructions += pragma_stack[0];
+
+                # Check if the current pragma is not inside
+                # another pragma block
+                if len(pragma_stack) == 1:
+
+                    # Copy the repeated block in the main instructions
+                    # list that will be codified later
+                    only_instructions += expand_instructions
+
+                # Check if the current pragma is inside
+                # another pragma block
+                elif len(pragma_stack) > 1:
+
+                    # Copy the repeated block inside the
+                    # instruction block of the outer pragma
+                    pragma_stack[1] += expand_instructions
+                    
+                # Remove the instruction block in top of the stack
+                pragma_stack = pragma_stack[1:]
+
+                # Remove the number of iterations in top of the stack
+                # because this value has already been used
+                iterations_stack = iterations_stack[1:]
+
+            # Did not find a match with a pragma begin or end
+            # so this means a syntax error
+            else:
+
+                # Return error code and error message
+                return [-1,line_number,"Bad defined pragma"]
+                
+        # Check if the lines are not a blank space or a comment
+        elif line.strip() and line[0:2] != "//":
+
+            # If the instruction is inside a pragma block
+            # then it must be stored in the top of the pragma stack
+            if len(pragma_stack) > 0:
+
+                # Save the instruction in the top of the stack
+                pragma_stack[0] += [line +"\n"]
+
+            # The instruction is not inside a pragma block
+            else:
+
+                # Add the instruction directly to the instruction list
+                only_instructions += [line + "\n"]
+                
+
+        # Increment the line number
+        line_number += 1
+
+    # Check if all the pragma blocks have a correctly
+    # defined begin and end sentences
+    if ( len(pragma_stack) != 0
+         or len(iterations_stack) != 0 ):
+
+        # Return error code and error message
+        return [-1,line_number,"Pragma without end"]
+
+    # In case all succeed return a sucess code
+    # and the list of the instructions
+    return [0, only_instructions]
+
+###########################################################################
+# Main function that reads all the user program and codified all the      # 
+# valid instructions ignoring comments and blank spaces                   # #                                                                         #
+#                                                                         #
+# This function is also in charge of resolving pragmas block that         #
+# multiply blocks of code                                                 #
+#                                                                         #
+# Inputs:                                                                 #
+#       user_program: list with strings that contains all the             #
+#                     instructions of the user program                    #
+#                                                                         #
+# Output: On success return a list with two elements, the first is        #
+#         the integer uses as a code to indicate if the conversion        #
+#         was successful or not and the second is a string with the       #
+#         hexadecimal value of the codified instruction                   #
+#                                                                         #  
+#         On failure return a list with three elements, the first is      #
+#         the error code, the second is the number of the line with       #
+#         the error and the third element is the error message            #
+###########################################################################
 def parse_program(user_program):
 
     # Array for the codified instructions
@@ -444,6 +681,17 @@ def parse_program(user_program):
     # Search for a pragma in order to expand the code
     # or eliminate the comments and blank spaces
     instructions = parse_pragma(user_program)
+
+    # Check if an error code is returned
+    if instructions[0] != 0:
+
+        # Return the error code for the editor to
+        # display the error message
+        return instructions
+
+    # If the operation is successful then get
+    # only the instructions without the success code
+    instructions = instructions[1]
 
     # Encode the instructions one by one
     for line in instructions:
