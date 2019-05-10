@@ -12,14 +12,7 @@ DataMemory::DataMemory(){
     // Set a default value of 1024 words = 4kB
     memory_size = 1024;
 
-    memory_data.reserve(memory_size);
-
-    unsigned int word;
-
-    for(word = 0; word < memory_size; ++word){
-
-        memory_data[word] = 0;
-    }
+    memory_data.resize(memory_size);
 }
 
 DataMemory::DataMemory(unsigned int set_memory_size){
@@ -33,14 +26,8 @@ DataMemory::DataMemory(unsigned int set_memory_size){
 
     memory_size = set_memory_size;
 
-    memory_data.reserve(memory_size);
+    memory_data.resize(memory_size);
 
-    unsigned int word;
-
-    for(word = 0; word < memory_size; ++word){
-
-        memory_data[word] = 0;
-    }
 }
 
 void DataMemory::ConfigureInput(unsigned int set_input_address,
@@ -58,7 +45,13 @@ void DataMemory::ConfigureInput(unsigned int set_input_address,
 
 void DataMemory::DoAction(){
 
+    if(input_address >= memory_size){
+
+        throw std::runtime_error("[DoAction]: memory  address out of bounds");
+    }
+
     read_data = memory_data[input_address];
+
 
     if(write_enable){
 

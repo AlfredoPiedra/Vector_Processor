@@ -1,18 +1,14 @@
-#ifndef MULTIPLEXER4X1_H
-#define MULTIPLEXER4X1_H
-
+#ifndef MULTIPLEXER2X1_H
+#define MULTIPLEXER2X1_H
 
 template <class T>
-class Multiplexer4x1
-{
+class Multiplexer2x1{
 
 private:
 
     // ############### Inputs ##################
-    T mux_input_00;
-    T mux_input_01;
-    T mux_input_10;
-    T mux_input_11;
+    T mux_input_0;
+    T mux_input_1;
     unsigned char mux_selection;
     // ############### Inputs ##################
 
@@ -22,12 +18,10 @@ private:
 
 public:
 
-    Multiplexer4x1();
+    Multiplexer2x1();
 
-    void ConfigureInput(T input_00,
-                        T input_01,
-                        T input_10,
-                        T input_11,
+    void ConfigureInput(T input_0,
+                        T input_1,
                         unsigned char selection);
 
     void DoAction();
@@ -36,4 +30,4 @@ public:
 
 };
 
-#endif // MULTIPLEXER4X1_H
+#endif // MULTIPLEXER2X1_H

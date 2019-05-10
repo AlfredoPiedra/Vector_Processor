@@ -42,31 +42,30 @@ RegisterFile::RegisterFile(unsigned char number_of_registers,
 
 }
 
-std::vector<unsigned char> RegisterFile::ReadRegister(char register_number){
+std::vector<unsigned char> RegisterFile::ReadRegister(unsigned char register_number){
 
-    if(register_number >= 0
-       && register_number < total_registers){
+    if(register_number < total_registers){
 
-        return register_file[register_number].GetOutputData();
+        return register_file[register_number].GetOutput();
 
     }else{
 
+         std::cout << "Tratando de leer: " << (int) register_number << std::endl;
          throw std::runtime_error("[ReadRegister]: register does not exist");
     }
 }
 
-void RegisterFile::WriteRegister(char register_number,
+void RegisterFile::WriteRegister(unsigned char register_number,
                                  std::vector<unsigned char> data)
 {
-    if(register_number >= 0
-       && register_number < total_registers){
+    if(register_number < total_registers){
 
         if(data.size() == register_file[0].GetRegisterSize()){
 
             throw std::runtime_error("[WriteRegister]: input data exceed register capacity");
         }
 
-        register_file[register_number].SetInputData(data);
+        register_file[register_number].ConfigureInput(data);
 
         register_file[register_number].DoAction();
 
@@ -76,10 +75,10 @@ void RegisterFile::WriteRegister(char register_number,
     }
 }
 
-void RegisterFile::ConfigureInput(char write_enable_signal,
-                                  char in_read_register_a,
-                                  char in_read_register_b,
-                                  char in_write_register,
+void RegisterFile::ConfigureInput(unsigned char write_enable_signal,
+                                  unsigned char in_read_register_a,
+                                  unsigned char in_read_register_b,
+                                  unsigned char in_write_register,
                                   std::vector<unsigned char> in_write_data)
 {
     write_enable = write_enable_signal;

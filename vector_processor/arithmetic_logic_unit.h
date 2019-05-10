@@ -3,10 +3,7 @@
 
 #include <iostream>
 
-#include "hardware_base.h"
-
-class ArithmeticLogicUnit : public HardwareBase
-{
+class ArithmeticLogicUnit{
 
 private:
 
@@ -29,7 +26,7 @@ public:
 
     void DoAction();
 
-    unsigned char GetOutputValue();
+    unsigned char GetOutput();
 
     unsigned char GetOutputFlags();
 

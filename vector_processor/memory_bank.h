@@ -12,22 +12,31 @@ class MemoryBank
 
 private:
 
-    DataMemory* data_memory_a;
-    DataMemory* data_memory_b;
-
     // ############### Input ##################
+    unsigned int input_addressA;
+    unsigned int input_addressB;
 
-    unsigned int input_address;
+    unsigned int input_dataA;
+    unsigned int input_dataB;
 
+    unsigned char write_enable;
+    unsigned char write_all;
     // ############### Input ##################
 
     // ############### Output ##################
-
-    unsigned int read_data;
-
+    unsigned int read_dataA;
+    unsigned int read_dataB;
+    unsigned char read_source;
     // ############### Output ##################
+
+    DataMemory *data_memory_a;
+    DataMemory *data_memory_b;
 
     void WriteImageData();
+
+    void MapMemoryAccess(unsigned int address,
+                         unsigned int data,
+                         unsigned char write_enable);
 
 public:
 
@@ -35,13 +44,18 @@ public:
 
     MemoryBank(unsigned int memory_size);
 
-    void ConfigureInput(unsigned int set_input_address,
+    void ConfigureInput(unsigned int set_input_addressA,
+                        unsigned int set_input_addressB,
+                        unsigned int set_input_dataA,
+                        unsigned int set_input_dataB,
                         unsigned char set_write_enable,
-                        unsigned int set_write_data);
+                        unsigned char set_write_all);
 
     void DoAction();
 
-    unsigned int GetOutput();
+    unsigned int GetOutputA();
+    unsigned int GetOutputB();
+    unsigned char GetOutputFlag();
 
 };
 

@@ -2,12 +2,19 @@
 
 MemoryBank::MemoryBank(){
 
-    input_address = 0;
+    input_addressA = 0;
+    input_addressB = 0;
 
-    read_data = 0;
+    input_dataA = 0;
+    input_dataB = 0;
+
+    read_dataA = 0;
+    read_dataB = 0;
+
+    write_enable = 0;
+    write_all = 0;
 
     data_memory_a = new DataMemory();
-
     data_memory_b = new DataMemory();
 
     WriteImageData();
@@ -16,12 +23,19 @@ MemoryBank::MemoryBank(){
 
 MemoryBank::MemoryBank(unsigned int memory_size){
 
-    read_data = 0;
+    input_addressA = 0;
+    input_addressB = 0;
 
-    input_address = 0;
+    input_dataA = 0;
+    input_dataB = 0;
+
+    read_dataA = 0;
+    read_dataB = 0;
+
+    write_enable = 0;
+    write_all = 0;
 
     data_memory_a = new DataMemory(memory_size);
-
     data_memory_b = new DataMemory(memory_size);
 
     WriteImageData();
@@ -86,49 +100,80 @@ void MemoryBank::WriteImageData(){
     }
 }
 
-void MemoryBank::ConfigureInput(unsigned int set_input_address,
+void MemoryBank::ConfigureInput(unsigned int set_input_addressA,
+                                unsigned int set_input_addressB,
+                                unsigned int set_input_dataA,
+                                unsigned int set_input_dataB,
                                 unsigned char set_write_enable,
-                                unsigned int set_write_data){
+                                unsigned char set_write_all){
 
-    input_address = set_input_address >> 2;
+    input_addressA = set_input_addressA >> 2;
+    input_addressB = set_input_addressB >> 2;
 
-    unsigned int memory_address = input_address;
+    input_dataA = set_input_dataA;
+    input_dataB = set_input_dataB;
 
-    if(memory_address % 2 == 0){
+    write_enable = set_write_enable;
+    write_all = set_write_all;
 
-        memory_address = (memory_address / 2) << 2;
+}
+
+void MemoryBank::MapMemoryAccess(unsigned int address,
+                                 unsigned int data,
+                                 unsigned char write_enable){
+    if(address % 2 == 0){
+
+        address = (address / 2) << 2;
+
+        data_memory_a->ConfigureInput(address,
+                                      write_enable,
+                                      data);
+
+        data_memory_a->DoAction();
+
+        read_dataA = data_memory_a->GetOutput();
+        read_source = 0;
 
     }else{
 
-        memory_address = ((memory_address - 1) / 2) << 2;
+        address = ((address - 1) / 2) << 2;
+
+        data_memory_b->ConfigureInput(address,
+                                      write_enable,
+                                      data);
+
+        data_memory_b->DoAction();
+
+        read_dataB = data_memory_b->GetOutput();
+        read_source = 1;
     }
-
-    data_memory_a->ConfigureInput(memory_address,
-                                  set_write_enable,
-                                  set_write_data);
-
-    data_memory_b->ConfigureInput(memory_address,
-                                  set_write_enable,
-                                  set_write_data);
 }
 
 void MemoryBank::DoAction(){
 
-    if(input_address % 2 == 0){
+    MapMemoryAccess(input_addressA,
+                    input_dataA,
+                    write_enable);
 
-        data_memory_a->DoAction();
+    if(write_all){
 
-        read_data = data_memory_a->GetOutput();
-
-    }else{
-
-        data_memory_b->DoAction();
-
-        read_data = data_memory_b->GetOutput();
+        MapMemoryAccess(input_addressB,
+                        input_dataB,
+                        write_enable);
     }
 }
 
-unsigned int MemoryBank::GetOutput(){
+unsigned int MemoryBank::GetOutputA(){
 
-    return read_data;
+    return read_dataA;
+}
+
+unsigned int MemoryBank::GetOutputB(){
+
+    return read_dataB;
+}
+
+unsigned char MemoryBank::GetOutputFlag(){
+
+    return read_source;
 }

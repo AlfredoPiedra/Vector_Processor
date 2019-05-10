@@ -26,15 +26,15 @@ void ArithmeticLogicUnit::DoAction()
         break;
 
     case 2:
-        operation_result = operand_a & operand_b;
+        operation_result = operand_a ^ operand_b;
         break;
 
     case 3:
-        operation_result = operand_a | operand_b;
+        operation_result = operand_a & operand_b;
         break;
 
     case 4:
-        operation_result = operand_a ^ operand_b;
+        operation_result = operand_a | operand_b;
         break;
 
     default:
@@ -85,8 +85,6 @@ void ArithmeticLogicUnit::DoAction()
     // Bitwise OR to set the fourth bit
     flags = flags | msb;
 
-    std::cout << "Resultado: " << (int) operation_result << std::endl;
-
 }
 
 void ArithmeticLogicUnit::ConfigureInput(unsigned char the_operand_a,
@@ -101,7 +99,7 @@ void ArithmeticLogicUnit::ConfigureInput(unsigned char the_operand_a,
 
 }
 
-unsigned char ArithmeticLogicUnit::GetOutputValue()
+unsigned char ArithmeticLogicUnit::GetOutput()
 {
     return operation_result;
 }

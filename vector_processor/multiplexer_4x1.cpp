@@ -9,6 +9,8 @@ Multiplexer4x1<T>::Multiplexer4x1(){
     mux_input_10 = T(0);
     mux_input_11 = T(0);
 
+    mux_selection = 0;
+
     mux_output = T(0);
 
 }
@@ -18,7 +20,7 @@ void Multiplexer4x1<T>::ConfigureInput(T input_00,
                                        T input_01,
                                        T input_10,
                                        T input_11,
-                                       T selection){
+                                       unsigned char selection){
 
     mux_input_00 = input_00;
     mux_input_01 = input_01;
@@ -66,5 +68,5 @@ T Multiplexer4x1<T>::GetOutput(){
 // Explicitly instantiate the templates class
 // to ensure that the compiler found and
 // compile the needed classes
-template class Multiplexer4x1<int>;
+template class Multiplexer4x1<unsigned int>;
 template class Multiplexer4x1<unsigned char>;

@@ -13,10 +13,17 @@ SOURCES += main.cpp \
     data_memory.cpp \
     memory_bank.cpp \
     barrel_shifter.cpp \
-    zero_extend.cpp
+    fetch.cpp \
+    type_adapter.cpp \
+    execute.cpp \
+    decode.cpp \
+    control_unit.cpp \
+    multiplexer_2x1.cpp \
+    memory.cpp \
+    write_back.cpp \
+    vectorial_processor.cpp
 
 HEADERS += \
-    hardware_base.h \
     register.h \
     arithmetic_logic_unit.h \
     register_file.h \
@@ -26,7 +33,15 @@ HEADERS += \
     data_memory.h \
     memory_bank.h \
     barrel_shifter.h \
-    zero_extend.h
+    fetch.h \
+    type_adapter.h \
+    execute.h \
+    decode.h \
+    control_unit.h \
+    multiplexer_2x1.h \
+    memory.h \
+    write_back.h \
+    vectorial_processor.h
 
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv

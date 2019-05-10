@@ -10,15 +10,7 @@ InstructionMemory::InstructionMemory()
     memory_size = 1024;
 
     // Allocate the memory
-    memory_data.reserve(memory_size);
-
-    // Initialize the memory values
-    unsigned int word;
-
-    for(word = 0; word < memory_size; ++word){
-
-        memory_data[word] = 0;
-    }
+    memory_data.resize(memory_size);
 
     WriteInstructions();
 
@@ -34,15 +26,7 @@ InstructionMemory::InstructionMemory(unsigned int in_memory_size){
     memory_size = in_memory_size;
 
     // Allocate the memory
-    memory_data.reserve(memory_size);
-
-    // Initialize the memory values
-    unsigned int word;
-
-    for(word = 0; word < memory_size; ++word){
-
-        memory_data[word] = 0;
-    }
+    memory_data.resize(memory_size);
 
     WriteInstructions();
 

@@ -1,33 +1,20 @@
 #include "register.h"
 
-Register::Register()
-{
-    std::cout << "Warning: register size not specified, using 32 as default value" << std::endl;
+Register::Register(){
 
     // Set a default register width in bytes
     register_size = 4;
 
     // Allocate the memory for the buffers
-    input_data.reserve(register_size);
-    output_data.reserve(register_size);
-
-    // counter
-    int element;
-
-    // Initialize all the values to 0
-    for (element = 0; element < register_size; ++element){
-
-        input_data.push_back(0);
-        output_data.push_back(0);
-    }
+    input_data.resize(register_size);
+    output_data.resize(register_size);
 
     // Set an initial value for the enable signal of the register
     signal_enable = 1;
 
 }
 
-Register::Register(unsigned char length)
-{
+Register::Register(unsigned char length){
 
     // Check if the register size makes sense
     if(length > 0){
@@ -39,8 +26,6 @@ Register::Register(unsigned char length)
     // In this case assign a default value to make sure the system dont crash
     }else{
 
-        std::cout << "Warning: invalid register size, using 32 as default value" << std::endl;
-
         // Assign a default register width
         register_size = 4;
     }
@@ -49,24 +34,11 @@ Register::Register(unsigned char length)
     signal_enable = 1;
 
     // Allocate the memory for the buffers
-    input_data.reserve(register_size);
-    output_data.reserve(register_size);
-
-    // counter
-    int element;
-
-    // Initialize all the values to 0
-    for (element = 0; element < register_size; ++element){
-
-        input_data.push_back(0);
-        output_data.push_back(0);
-    }
+    input_data.resize(register_size);
+    output_data.resize(register_size);
 }
 
-void Register::DoAction()
-{
-
-    std::cout << "I am a register" << std::endl;
+void Register::DoAction(){
 
     // Execute the action only if the enable signal is HIGH
     if(signal_enable){
@@ -82,8 +54,7 @@ void Register::DoAction()
     }
 }
 
-void Register::DoReset()
-{
+void Register::DoReset(){
 
     int byte;
 
@@ -96,15 +67,15 @@ void Register::DoReset()
 
 }
 
-std::vector<unsigned char> Register::GetOutputData()
-{
-    return output_data;
-}
-
-void Register::SetInputData(std::vector<unsigned char> data){
+void Register::ConfigureInput(std::vector<unsigned char> data){
 
     input_data = data;
 
+}
+
+std::vector<unsigned char> Register::GetOutput(){
+
+    return output_data;
 }
 
 unsigned char Register::GetRegisterSize()

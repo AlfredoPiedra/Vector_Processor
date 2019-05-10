@@ -21,14 +21,14 @@ private:
     // ############### Inputs ##################
 
     // Write enable signal
-    char write_enable;
+    unsigned char write_enable;
 
     // Registers from which the data will be read
-    char read_register_a;
-    char read_register_b;
+    unsigned char read_register_a;
+    unsigned char read_register_b;
 
     // Register in which the data will be written
-    char write_register;
+    unsigned char write_register;
 
     // Data that will be written in a register
     std::vector<unsigned char> write_data;
@@ -46,11 +46,11 @@ private:
 
     // Function used to access a particular
     // register in the register file
-    std::vector<unsigned char> ReadRegister(char register_number);
+    std::vector<unsigned char> ReadRegister(unsigned char register_number);
 
     // Function used to write in a particular
     // register in the register file
-    void WriteRegister(char register_number,
+    void WriteRegister(unsigned char register_number,
                        std::vector<unsigned char> data);
 
 public:
@@ -60,10 +60,10 @@ public:
     RegisterFile(unsigned char number_of_registers,
                  unsigned char size_of_registers);
 
-    void ConfigureInput(char write_enable_signal,
-                        char in_read_register_a,
-                        char in_read_register_b,
-                        char in_write_register,
+    void ConfigureInput(unsigned char write_enable_signal,
+                        unsigned char in_read_register_a,
+                        unsigned char in_read_register_b,
+                        unsigned char in_write_register,
                         std::vector<unsigned char> in_write_data);
 
     void DoAction();
