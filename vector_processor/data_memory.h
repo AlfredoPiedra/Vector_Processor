@@ -35,13 +35,20 @@ public:
 
     DataMemory(unsigned int set_memory_size);
 
-    void ConfigureInput(unsigned int set_input_address,
-                        unsigned char set_write_enable,
-                        unsigned int set_write_data);
+    void ConfigureReadInput(unsigned int set_input_address);
 
-    void DoAction();
+    void ConfigureWriteInput(unsigned int set_input_address,
+                             unsigned char set_write_enable,
+                             unsigned int set_write_data);
+    void DoReadAction();
+
+    void DoWriteAction();
 
     unsigned int GetOutput();
+
+    unsigned int GetMemorySize();
+
+    void PrintContent();
 
 };
 

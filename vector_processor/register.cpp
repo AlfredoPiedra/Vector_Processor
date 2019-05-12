@@ -45,8 +45,8 @@ void Register::DoAction(){
 
         int byte;
 
-        // On the clock posedge or negedge make
-        // the output data equal to the input data
+        // On the clock posedge make the output
+        // data equal to the input data
         for(byte = 0; byte < register_size; ++byte){
 
             output_data[byte] = input_data[byte];
@@ -70,6 +70,12 @@ void Register::DoReset(){
 void Register::ConfigureInput(std::vector<unsigned char> data){
 
     input_data = data;
+
+}
+
+void Register::SetEnable(unsigned char enable){
+
+    signal_enable = enable;
 
 }
 

@@ -6,19 +6,18 @@
 #include <opencv2/imgcodecs/imgcodecs_c.h>
 
 #include "data_memory.h"
+#include "type_adapter.h"
 
 class MemoryBank
 {
 
-private:
-
+//private:
+public:
     // ############### Input ##################
     unsigned int input_addressA;
     unsigned int input_addressB;
-
     unsigned int input_dataA;
     unsigned int input_dataB;
-
     unsigned char write_enable;
     unsigned char write_all;
     // ############### Input ##################
@@ -34,29 +33,34 @@ private:
 
     void WriteImageData();
 
-    void MapMemoryAccess(unsigned int address,
-                         unsigned int data,
-                         unsigned char write_enable);
+    void MapWriteMemory(unsigned int address,
+                        unsigned int data,
+                        unsigned char write_enable);
 
-public:
+    void MapReadMemory(unsigned int address);
+
+//public:
 
     MemoryBank();
 
     MemoryBank(unsigned int memory_size);
 
-    void ConfigureInput(unsigned int set_input_addressA,
-                        unsigned int set_input_addressB,
-                        unsigned int set_input_dataA,
-                        unsigned int set_input_dataB,
-                        unsigned char set_write_enable,
-                        unsigned char set_write_all);
+    void ConfigureReadInput(unsigned int set_input_addressA,
+                            unsigned int set_input_addressB);
 
-    void DoAction();
+    void ConfigureWriteInput(unsigned int set_input_addressA,
+                             unsigned int set_input_addressB,
+                             unsigned int set_input_dataA,
+                             unsigned int set_input_dataB,
+                             unsigned char set_write_enable,
+                             unsigned char set_write_all);
+
+    void DoReadAction();
+    void DoWriteAction();
 
     unsigned int GetOutputA();
     unsigned int GetOutputB();
     unsigned char GetOutputFlag();
-
 };
 
 #endif // MEMORYBANK_H

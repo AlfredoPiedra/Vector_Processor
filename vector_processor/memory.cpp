@@ -10,6 +10,10 @@ Memory::Memory(){
 
     memory_bank = new MemoryBank();
 
+    address = 0;
+    address_plus_4 = 4;
+    vector_d_output_lsb = 0;
+
     write_data_source = new Multiplexer2x1<unsigned int>();
 }
 
@@ -60,10 +64,9 @@ void Memory::OrganizeOutput(){
     memory_output[26] = memory_input[27]; // vector write
 
     memory_writeback->ConfigureInput(memory_output);
-    memory_writeback->DoAction();
 }
 
-void Memory::DoAction(){
+void Memory::DoNegativeEdgeAction(){
 
     std::vector<unsigned char> buffer;
 
@@ -79,7 +82,7 @@ void Memory::DoAction(){
     buffer[2] = memory_input[6];
     buffer[3] = memory_input[7];
 
-    unsigned int vector_d__output_lsb = adapter::BytesToInteger(buffer);
+    vector_d_output_lsb = adapter::BytesToInteger(buffer);
 
     buffer[0] = memory_input[8];
     buffer[1] = memory_input[9];
@@ -93,39 +96,91 @@ void Memory::DoAction(){
     buffer[2] = memory_input[14];
     buffer[3] = memory_input[15];
 
-    unsigned int address = adapter::BytesToInteger(buffer);
+    address = adapter::BytesToInteger(buffer);
 
     buffer[0] = memory_input[16];
     buffer[1] = memory_input[17];
     buffer[2] = memory_input[18];
     buffer[3] = memory_input[19];
 
-    unsigned int address_plus_4 = adapter::BytesToInteger(buffer);
-
-    unsigned char write_enable = memory_input[20];
-    unsigned char write_all    = memory_input[21];
-
-    unsigned char vector_d   = memory_input[22];
-    unsigned char register_d = memory_input[23];
+    address_plus_4 = adapter::BytesToInteger(buffer);
 
     write_data_source->ConfigureInput(register_d_output,
                                       vector_d_output_msb,
-                                      write_all);
+                                      memory_input[21]); // write all
 
     write_data_source->DoAction();
 
-    memory_bank->ConfigureInput(address,
-                                address_plus_4,
-                                write_data_source->GetOutput(),
-                                vector_d__output_lsb,
-                                write_enable,
-                                write_all);
-    memory_bank->DoAction();
+    memory_bank->ConfigureReadInput(address,
+                                    address_plus_4);
+
+    memory_bank->DoReadAction();
 
     OrganizeOutput();
+}
+
+
+void Memory::DoPositiveEdgeAction(){
+
+    memory_bank->ConfigureWriteInput(address,
+                                     address_plus_4,
+                                     write_data_source->GetOutput(),
+                                     vector_d_output_lsb,
+                                     memory_input[20],  // write enable
+                                     memory_input[21]); // write all
+
+    memory_bank->DoWriteAction();
+
+    memory_writeback->DoAction();
+
+}
+
+void Memory::DoAction(unsigned char clock){
+
+    // Write in the registers on posedge
+    if(clock){
+
+        DoPositiveEdgeAction();
+
+    // Read the registers values on negedge
+    }else{
+
+        DoNegativeEdgeAction();
+    }
+}
+
+std::vector<unsigned char> Memory::GetHazardUnitInput(){
+
+    std::vector<unsigned char> hazard_input;
+    hazard_input.resize(16);
+
+    hazard_input[0] = memory_input[23];
+    hazard_input[1] = memory_input[22];
+    hazard_input[2] = memory_input[26];
+    hazard_input[3] = memory_input[27];
+    hazard_input[4] = memory_input[8];
+    hazard_input[5] = memory_input[9];
+    hazard_input[6] = memory_input[10];
+    hazard_input[7] = memory_input[11];
+
+    hazard_input[8]  = memory_input[0];
+    hazard_input[9]  = memory_input[1];
+    hazard_input[10] = memory_input[2];
+    hazard_input[11] = memory_input[3];
+    hazard_input[12] = memory_input[4];
+    hazard_input[13] = memory_input[5];
+    hazard_input[14] = memory_input[6];
+    hazard_input[15] = memory_input[7];
+
+    return hazard_input;
 }
 
 std::vector<unsigned char> Memory::GetOutput(){
 
     return memory_writeback->GetOutput();
+}
+
+MemoryBank Memory::GetMemoryBank(){
+
+    return *memory_bank;
 }

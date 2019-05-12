@@ -12,6 +12,7 @@ WriteBack::WriteBack(){
     vector_d_lsb_source = new Multiplexer2x1<unsigned int>();
     register_d_source = new Multiplexer2x1<unsigned int>();
     read_data_source = new Multiplexer2x1<unsigned int>();
+
 }
 
 void WriteBack::ConfigureInput(std::vector<unsigned char> set_writeback_input){
@@ -89,28 +90,25 @@ void WriteBack::DoAction(){
     unsigned char read_source = writeback_input[20];
     unsigned char register_write_src = writeback_input[21];
     unsigned char vector_write_src = writeback_input[22];
-    unsigned char Vd = writeback_input[23];
-    unsigned char Rd = writeback_input[24];
-
 
     read_data_source->ConfigureInput(read_data_a,
                                      read_data_b,
                                      read_source);
     read_data_source->DoAction();
 
-    vector_d_msb_source->ConfigureInput(read_data_a,
-                                        vector_d_output_msb,
+    vector_d_msb_source->ConfigureInput(vector_d_output_msb,
+                                        read_data_a,
                                         vector_write_src);
 
     vector_d_msb_source->DoAction();
 
-    vector_d_lsb_source->ConfigureInput(read_data_b,
-                                        vector_d_output_lsb,
+    vector_d_lsb_source->ConfigureInput(vector_d_output_lsb,
+                                        read_data_b,
                                         vector_write_src);
     vector_d_lsb_source->DoAction();
 
-    register_d_source->ConfigureInput(read_data_source->GetOutput(),
-                                      register_d_output,
+    register_d_source->ConfigureInput(register_d_output,
+                                      read_data_source->GetOutput(),
                                       register_write_src);
     register_d_source->DoAction();
 

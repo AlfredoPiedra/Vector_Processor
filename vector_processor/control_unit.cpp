@@ -32,6 +32,8 @@ void ControlUnit::ConfigureInput(unsigned char set_operational_code,
 
 void ControlUnit::DoAction(){
 
+    //std::cout << "Probando opcode: " << (int) operational_code << std::endl;
+
     // Format F instructions
     if(operational_code <= 9){
 
@@ -46,7 +48,7 @@ void ControlUnit::DoAction(){
         write_all = 0;
 
         // Choose the data coming from the vector functional unit
-        vector_write_src = 1;
+        vector_write_src = 0;
 
         switch(operational_code){
 
@@ -65,7 +67,7 @@ void ControlUnit::DoAction(){
         // Dont care values
         register_write = 0;
         register_write_src = 0;
-        address_src = 3;
+        address_src = 0;
         register_d_src = 0;
 
     // Format M instruction VLDR and VSTR
@@ -92,14 +94,14 @@ void ControlUnit::DoAction(){
 
         // Write in the register because of pre/post indexed addressing
         register_write = 1;
-        register_write_src = 1;
+        register_write_src = 0;
         register_d_src = 2;
 
         // Choose the data coming from the memory
-        vector_write_src = 0;
+        vector_write_src = 1;
 
         // Choose from the already incremented address or the original value
-        address_src = i_or_p_bit;
+        address_src = i_or_p_bit + 1;
 
         // Dont care values
         vector_result = 0;
@@ -131,12 +133,12 @@ void ControlUnit::DoAction(){
         if(operational_code != 15){
 
             // Choose the value coming from the functional unit
-            register_write_src = 1;
+            register_write_src = 0;
 
         }else{
 
             // Choose the value coming from the memory
-            register_write_src = 0;
+            register_write_src = 1;
         }
 
         // Set if the instruction use a immediate value
@@ -157,7 +159,7 @@ void ControlUnit::DoAction(){
         }
 
         // Choose the i format address
-        address_src = 2;
+        address_src = 3;
 
         // Dont care values
         vector_write = 0;

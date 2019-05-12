@@ -21,7 +21,9 @@ SOURCES += main.cpp \
     multiplexer_2x1.cpp \
     memory.cpp \
     write_back.cpp \
-    vectorial_processor.cpp
+    vectorial_processor.cpp \
+    hazard_unit.cpp \
+    clock.cpp
 
 HEADERS += \
     register.h \
@@ -41,7 +43,11 @@ HEADERS += \
     multiplexer_2x1.h \
     memory.h \
     write_back.h \
-    vectorial_processor.h
+    vectorial_processor.h \
+    hazard_unit.h \
+    clock.h
 
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
+
+LIBS += -pthread

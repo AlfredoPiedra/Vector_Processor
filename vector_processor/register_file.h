@@ -19,29 +19,21 @@ private:
     std::vector<Register> register_file;
 
     // ############### Inputs ##################
-
     // Write enable signal
     unsigned char write_enable;
-
     // Registers from which the data will be read
     unsigned char read_register_a;
     unsigned char read_register_b;
-
     // Register in which the data will be written
     unsigned char write_register;
-
     // Data that will be written in a register
     std::vector<unsigned char> write_data;
-
     // ############### Inputs ##################
 
-
     // ############### Outputs ##################
-
     // The data read from the register file
     std::vector<unsigned char> read_data_a;
     std::vector<unsigned char> read_data_b;
-
     // ############### Outputs ##################
 
     // Function used to access a particular
@@ -52,7 +44,6 @@ private:
     // register in the register file
     void WriteRegister(unsigned char register_number,
                        std::vector<unsigned char> data);
-
 public:
 
     // Constructors of the class
@@ -60,17 +51,21 @@ public:
     RegisterFile(unsigned char number_of_registers,
                  unsigned char size_of_registers);
 
-    void ConfigureInput(unsigned char write_enable_signal,
-                        unsigned char in_read_register_a,
-                        unsigned char in_read_register_b,
-                        unsigned char in_write_register,
-                        std::vector<unsigned char> in_write_data);
+    void ConfigureReadInput(unsigned char in_read_register_a,
+                            unsigned char in_read_register_b);
 
-    void DoAction();
+    void ConfigureWriteInput(unsigned char write_enable_signal,
+                             unsigned char in_write_register,
+                             std::vector<unsigned char> in_write_data);
+    void DoReadAction();
+
+    void DoWriteAction();
 
     std::vector<unsigned char> GetOutputDataA();
 
     std::vector<unsigned char> GetOutputDataB();
+
+    void PrintContent();
 
 };
 

@@ -12,10 +12,10 @@ Fetch::Fetch(){
     pc_plus_4 = new Adder();
 
     // Instance a memory for the instructions
-    instruction_memory = new InstructionMemory();
+    instruction_memory = new InstructionMemory(61440);
 }
 
-void Fetch::DoAction(){
+void Fetch::DoNegativeEdgeAction(){
 
     std::vector<unsigned char> pc_bytes = pc->GetOutput();
 
@@ -33,19 +33,52 @@ void Fetch::DoAction(){
 
     pc->ConfigureInput(pc_bytes);
 
-    pc->DoAction();
-
     unsigned int read_instruction = instruction_memory->GetOutput();
 
-    std::cout << (int) read_instruction << std::endl;
-
     fetch_decode->ConfigureInput(adapter::IntegerToBytes(read_instruction));
+}
+
+
+void Fetch::DoPositiveEdgeAction(){
 
     fetch_decode->DoAction();
+
+    pc->DoAction();
+}
+
+void Fetch::DoAction(unsigned char clock){
+
+    // Write in the registers on posedge
+    if(clock){
+
+        DoPositiveEdgeAction();
+
+    // Read the registers values on negedge
+    }else{
+
+        DoNegativeEdgeAction();
+    }
+}
+
+void Fetch::DoStall(unsigned char stall){
+
+    pc->SetEnable(stall);
+    fetch_decode->SetEnable(stall);
 }
 
 std::vector<unsigned char> Fetch::GetOutput(){
 
     return fetch_decode->GetOutput();
 
+}
+
+unsigned int Fetch::GetSourceCodeLimit(){
+
+    return instruction_memory->GetSourceCodeLimit();
+}
+
+void Fetch::LoadUserProgram(std::string path){
+
+    instruction_memory = new InstructionMemory(instruction_memory->GetMemorySize(),
+                                               path);
 }

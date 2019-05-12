@@ -14,7 +14,7 @@ private:
 
 public:
 
-    char signal_enable;
+    unsigned char signal_enable;
 
     // Constructors of the class
     Register();
@@ -27,7 +27,7 @@ public:
     // of the register
     void ConfigureInput(std::vector<unsigned char> data);
 
-    // Override the base class function
+    // Execute a different action depending on the clock state
     void DoAction();
 
     // Function used to get the output data
@@ -36,6 +36,8 @@ public:
 
     // Function used to get the register size
     unsigned char GetRegisterSize();
+
+    void SetEnable(unsigned char enable);
 
 };
 

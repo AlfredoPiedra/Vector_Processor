@@ -1,6 +1,7 @@
 #ifndef CONTROLUNIT_H
 #define CONTROLUNIT_H
 
+#include <iostream>
 #include <vector>
 #include <stdexcept>
 

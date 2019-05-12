@@ -28,9 +28,9 @@ private:
     // ############### Output ##################
 
 
-    // Function used to write the user program
-    // instructions in the memory
-    void WriteInstructions();
+    unsigned char source_code_limit;
+    unsigned int instruction_counter;
+    unsigned int number_of_instructions;
 
 public:
 
@@ -38,11 +38,22 @@ public:
 
     InstructionMemory(unsigned int in_memory_size);
 
+    InstructionMemory(unsigned int in_memory_size,
+                      std::string user_program);
+
+    // Function used to write the user program
+    // instructions in the memory
+    void WriteInstructions(std::string program);
+
     void ConfigureInput(unsigned int input_memory_address);
 
     void DoAction();
 
     unsigned int GetOutput();
+
+    unsigned char GetSourceCodeLimit();
+
+    unsigned int GetMemorySize();
 
 };
 

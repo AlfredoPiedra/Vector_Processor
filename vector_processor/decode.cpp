@@ -20,6 +20,8 @@ Decode::Decode(){
     scalar_write_enable = 0;
     scalar_write_register = 0;
 
+    flush_execute = 0;
+
     decode_instruction.resize(4);
     scalar_write_data.resize(4);
     vector_write_data.resize(8);
@@ -28,6 +30,23 @@ Decode::Decode(){
 void Decode::ConfigureInput(std::vector<unsigned char> set_decode_instruction){
 
     decode_instruction = set_decode_instruction;
+}
+
+void Decode::ConfigureWrite(unsigned char set_vector_write_enable,
+                            unsigned char set_vector_d,
+                            unsigned char set_register_write_enable,
+                            unsigned char set_register_d,
+                            std::vector<unsigned char> set_vector_write_data,
+                            std::vector<unsigned char> set_register_write_data){
+
+    vector_write_enable = set_vector_write_enable;
+    vector_write_register = set_vector_d;
+
+    scalar_write_enable = set_register_write_enable;
+    scalar_write_register = set_register_d;
+
+    vector_write_data = set_vector_write_data;
+    scalar_write_data = set_register_write_data;
 }
 
 void Decode::OrganizeOutput(unsigned char vector_d,
@@ -112,74 +131,74 @@ void Decode::OrganizeOutput(unsigned char vector_d,
     decode_output[49] = vector_a;
     decode_output[50] = vector_b;
 
-    decode_execute->ConfigureInput(decode_output);
-    decode_execute->DoAction();
+    decode_execute->ConfigureInput(decode_output);    
 }
 
-void Decode::DoAction(){
+void Decode::DoNegativeEdgeAction(){
 
     // Get the operation code that is in the same place for all the formats
     unsigned char opcode = decode_instruction[0] >> 4;
 
-    std::cout << "Opcode: " << (int) opcode << std::endl;
+    //std::cout << "Opcode: " << (int) decode_instruction[0] << std::endl;
 
     // Get the 4th bit encoded in the instruction
     unsigned char i_or_p_bit = (decode_instruction[0] & 8) >> 3;
 
-    std::cout << "I/P: " << (int) i_or_p_bit << std::endl;
+    //std::cout << "I/P: " << (int) i_or_p_bit << std::endl;
 
     // For format I get the operands encoded in the instruction
 
     // Get only the last 3 bits incluiding LSB, for the operand register b;
     unsigned char register_b = decode_instruction[3] & 7;
 
-    std::cout << "Register_B: " << (int) register_b << std::endl;
+    //std::cout << "Register_B: " << (int) register_b << std::endl;
 
     // Get only the first 3 bits incluiding MSB, for the operand register a
     unsigned char register_a = decode_instruction[1] >> 5;
 
-    std::cout << "Register_A: " << (int) register_a << std::endl;
+    //std::cout << "Register_A: " << (int) register_a << std::endl;
 
     // Get only the last 3 bits incluiding LSB, for the operand register d
     unsigned char register_d = decode_instruction[0] & 7;
 
-    std::cout << "Register_D: " << (int) register_d << std::endl;
+    //std::cout << "Register_D: " << (int) register_d << std::endl;
 
     // Get the 21 bits immediate value encoded in the instruction
     unsigned int i_immediate = decode_instruction[1] & 31;
     i_immediate = (i_immediate << 8) | decode_instruction[2];
     i_immediate = (i_immediate << 8) | decode_instruction[3];
 
-    std::cout << "Immediate_I: " << (int) i_immediate << std::endl;
+    //std::cout << "Immediate_I: " << (int) i_immediate << std::endl;
     // For the format M get the operands encoded in the instruction
     // register_b = source register encoded in the LSB
     unsigned char vector_d = (( decode_instruction[0] & 7 ) << 1 ) | (decode_instruction[1] >> 7);
 
-    std::cout << "Vector_D: " << (int) vector_d << std::endl;
+    //std::cout << "Vector_D: " << (int) vector_d << std::endl;
 
-    // Get the 23 bits immediate value encoded in the instruction
+    // Get the 20 bits immediate value encoded in the instruction
     unsigned int m_immediate = decode_instruction[1] & 127;
     m_immediate = (m_immediate << 8) | decode_instruction[2];
     m_immediate = (m_immediate << 8) | decode_instruction[3];
+    m_immediate = m_immediate >> 3;
 
-    std::cout << "Immediate_M: " << (int) m_immediate << std::endl;
+    //std::cout << "Immediate_M: " << (int) m_immediate << std::endl;
 
     // For the format F get the operands encoded in the instruction
     // Get the 4 bits in the middle of the byte, for the vector register a
     unsigned char vector_a = decode_instruction[1] << 1;
     vector_a = vector_a >> 4;
 
-    std::cout << "Vector_A: " << (int) vector_a << std::endl;
+    //std::cout << "Vector_A: " << (int) vector_a << std::endl;
 
     // Get only the last 4 bits incluiding LSB, for the vector register b
     unsigned char vector_b = decode_instruction[3] & 15;
 
-    std::cout << "Vector_B: " << (int) vector_b << std::endl;
+    //std::cout << "Vector_B: " << (int) vector_b << std::endl;
 
     // Get the 8 bits immediate value encoded in the instruction
     unsigned char f_immediate = decode_instruction[3];
 
-    std::cout << "Immediate_F: " << (int) f_immediate << std::endl;
+    //std::cout << "Immediate_F: " << (int) f_immediate << std::endl;
 
     control_unit->ConfigureInput(opcode,i_or_p_bit);
     control_unit->DoAction();
@@ -187,20 +206,16 @@ void Decode::DoAction(){
     std::vector<unsigned char> control_output = control_unit->GetOutput();
 
     operand_a_source->ConfigureInput(register_a, register_d, control_output[2]);
+    operand_a_source->DoAction();
 
-    scalar_registers->ConfigureInput(scalar_write_enable,
-                                     operand_a_source->GetOutput(),
-                                     register_b,
-                                     scalar_write_register,
-                                     scalar_write_data);
+    scalar_registers->ConfigureReadInput(operand_a_source->GetOutput(),
+                                         register_b);
+    scalar_registers->DoReadAction();
 
-    vector_registers->ConfigureInput(vector_write_enable,
-                                     vector_a,
-                                     vector_b,
-                                     vector_write_register,
-                                     vector_write_data);
-    scalar_registers->DoAction();
-    vector_registers->DoAction();
+    vector_registers->ConfigureReadInput(vector_a,
+                                         vector_b);
+
+    vector_registers->DoReadAction();
 
     OrganizeOutput(vector_d,
                    register_d,
@@ -211,7 +226,74 @@ void Decode::DoAction(){
                    f_immediate,
                    m_immediate,
                    i_immediate);
+}
 
+void Decode::DoPositiveEdgeAction(){
+
+    scalar_registers->ConfigureWriteInput(scalar_write_enable,
+                                          scalar_write_register,
+                                          scalar_write_data);
+    scalar_registers->DoWriteAction();
+
+    vector_registers->ConfigureWriteInput(vector_write_enable,
+                                          vector_write_register,
+                                          vector_write_data);
+    vector_registers->DoWriteAction();
+
+    if(!flush_execute){
+
+        decode_execute->DoAction();
+
+    }else{
+
+        decode_execute->DoReset();
+    }
+}
+
+void Decode::DoAction(unsigned char clock){
+
+    // Write in the registers on posedge
+    if(clock){
+
+        DoPositiveEdgeAction();
+
+    // Read the registers values on negedge
+    }else{
+
+        DoNegativeEdgeAction();
+    }
+}
+
+std::vector<unsigned char> Decode::GetHazardUnitInput(){
+
+    // For the format F get the operands encoded in the instruction
+    // Get the 4 bits in the middle of the byte, for the vector register a
+    unsigned char vector_a = decode_instruction[1] << 1;
+    vector_a = vector_a >> 4;
+
+    // Get only the last 4 bits incluiding LSB, for the vector register b
+    unsigned char vector_b = decode_instruction[3] & 15;
+
+    // Get only the last 3 bits incluiding LSB, for the operand register b;
+    unsigned char register_b = decode_instruction[3] & 7;
+
+    // Get only the first 3 bits incluiding MSB, for the operand register a
+    unsigned char register_a = decode_instruction[1] >> 5;
+
+    std::vector<unsigned char> hazard_input;
+    hazard_input.resize(4);
+
+    hazard_input[0] = register_a;
+    hazard_input[1] = register_b;
+    hazard_input[2] = vector_a;
+    hazard_input[3] = vector_b;
+
+    return hazard_input;
+}
+
+void Decode::DoFlush(unsigned char stall){
+
+    flush_execute = !stall;
 }
 
 std::vector<unsigned char> Decode::GetOutput(){
@@ -219,13 +301,13 @@ std::vector<unsigned char> Decode::GetOutput(){
     return decode_execute->GetOutput();
 }
 
-void Decode::WriteResults(unsigned char set_vector_write_enable,
-                          unsigned char set_vector_d,
-                          unsigned char ser_register_write_enable,
-                          unsigned char set_register_d,
-                          std::vector<unsigned char> set_vector_write_data,
-                          std::vector<unsigned char> set_register_write_data){
+void Decode::PrintContent(){
 
+    std::cout << "############## Escalares ######################" << std::endl;
 
+    scalar_registers->PrintContent();
 
+    std::cout << "############## Vectoriales ######################" << std::endl;
+
+    vector_registers->PrintContent();
 }

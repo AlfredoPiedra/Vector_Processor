@@ -12,11 +12,34 @@ InstructionMemory::InstructionMemory()
     // Allocate the memory
     memory_data.resize(memory_size);
 
-    WriteInstructions();
+    instruction_counter = 0;
+    source_code_limit = 1;
+
+    WriteInstructions("/home/alfredo/VectorProcessor/app.txt");
 
 }
 
-InstructionMemory::InstructionMemory(unsigned int in_memory_size){
+InstructionMemory::InstructionMemory(unsigned int in_memory_size)
+{
+    // Initialize all the class attributes
+    input_address = 0;
+    output_data = 0;
+
+    // Set the specified memory size
+    memory_size = in_memory_size;
+
+    // Allocate the memory
+    memory_data.resize(memory_size);
+
+    instruction_counter = 0;
+    source_code_limit = 1;
+
+    WriteInstructions("/home/alfredo/VectorProcessor/app.txt");
+
+}
+
+InstructionMemory::InstructionMemory(unsigned int in_memory_size,
+                                     std::string user_program){
 
     // Initialize all the class attributes
     input_address = 0;
@@ -28,17 +51,20 @@ InstructionMemory::InstructionMemory(unsigned int in_memory_size){
     // Allocate the memory
     memory_data.resize(memory_size);
 
-    WriteInstructions();
+    instruction_counter = 0;
+    source_code_limit = 1;
+
+    WriteInstructions(user_program);
 
 }
 
-void InstructionMemory::WriteInstructions(){
+void InstructionMemory::WriteInstructions(std::string program){
 
     unsigned int memory_pos = 0;
 
     std::string instruction;
 
-    std::ifstream instruction_file("/home/alfredo/VectorProcessor/app.txt");
+    std::ifstream instruction_file(program);
 
     if(instruction_file.is_open()){
 
@@ -62,6 +88,7 @@ void InstructionMemory::WriteInstructions(){
         throw std::runtime_error("[WriteInstructions]: can't open the instruction source file");
     }
 
+    number_of_instructions = memory_pos + 7;
 }
 
 void InstructionMemory::ConfigureInput(unsigned int input_memory_address){
@@ -72,10 +99,29 @@ void InstructionMemory::ConfigureInput(unsigned int input_memory_address){
 
 void InstructionMemory::DoAction(){
 
-    output_data = memory_data[input_address];
+    if(instruction_counter >= number_of_instructions){
+
+        source_code_limit = 0;
+        output_data = 0;
+
+    }else{
+
+        output_data = memory_data[input_address];
+        instruction_counter = input_address;
+    }
 }
 
 unsigned int InstructionMemory::GetOutput(){
 
     return output_data;
+}
+
+unsigned char InstructionMemory::GetSourceCodeLimit(){
+
+    return source_code_limit;
+}
+
+unsigned int InstructionMemory::GetMemorySize(){
+
+    return memory_size;
 }

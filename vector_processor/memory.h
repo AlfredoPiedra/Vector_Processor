@@ -25,7 +25,15 @@ private:
 
     Multiplexer2x1<unsigned int> *write_data_source;
 
+    unsigned int address;
+    unsigned int address_plus_4;
+    unsigned int vector_d_output_lsb;
+
     void OrganizeOutput();
+
+    void DoPositiveEdgeAction();
+
+    void DoNegativeEdgeAction();
 
 public:
 
@@ -33,9 +41,13 @@ public:
 
     void ConfigureInput(std::vector<unsigned char> set_memory_input);
 
-    void DoAction();
+    void DoAction(unsigned char clock);
+
+    std::vector<unsigned char> GetHazardUnitInput();
 
     std::vector<unsigned char> GetOutput();
+
+    MemoryBank GetMemoryBank();
 };
 
 #endif // MEMORY_H

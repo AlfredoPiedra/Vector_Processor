@@ -46,22 +46,35 @@ private:
                         unsigned int m_immediate,
                         unsigned int i_immediate);
 
+    void DoNegativeEdgeAction();
+
+    void DoPositiveEdgeAction();
+
+    unsigned char flush_execute;
+
 public:
 
     Decode();
 
     void ConfigureInput(std::vector<unsigned char> set_decode_instruction);
 
-    void DoAction();
+    void DoAction(unsigned char clock);
 
-    void WriteResults(unsigned char set_vector_write_enable,
-                      unsigned char set_vector_d,
-                      unsigned char ser_register_write_enable,
-                      unsigned char set_register_d,
-                      std::vector<unsigned char> set_vector_write_data,
-                      std::vector<unsigned char> set_register_write_data);
+    void ConfigureWrite(unsigned char set_vector_write_enable,
+                        unsigned char set_vector_d,
+                        unsigned char set_register_write_enable,
+                        unsigned char set_register_d,
+                        std::vector<unsigned char> set_vector_write_data,
+                        std::vector<unsigned char> set_register_write_data);
+
+
+    void DoFlush(unsigned char stall);
+
+    std::vector<unsigned char> GetHazardUnitInput();
 
     std::vector<unsigned char> GetOutput();
+
+    void PrintContent();
 };
 
 #endif // DECODE_H

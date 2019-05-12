@@ -17,11 +17,9 @@ int main(){
 
     VectorialProcessor asip;
 
-    asip.StartProcessing();
+    asip.CompleteProcessing();
 
-    //cv::namedWindow("Original-1er estrategia", cv::WINDOW_NORMAL);
-    //cv::imshow( "Ruta-1er estrategia", Imagen );
-    //cv::waitKey(0);
+    asip.ReadAllMemory();
 
     return 0;
 }

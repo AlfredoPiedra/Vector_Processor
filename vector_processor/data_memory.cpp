@@ -30,9 +30,15 @@ DataMemory::DataMemory(unsigned int set_memory_size){
 
 }
 
-void DataMemory::ConfigureInput(unsigned int set_input_address,
-                                unsigned char set_write_enable,
-                                unsigned int set_write_data){
+void DataMemory::ConfigureReadInput(unsigned int set_input_address){
+
+    // The memory address must be 4 byte aligned
+    input_address = set_input_address >> 2;
+}
+
+void DataMemory::ConfigureWriteInput(unsigned int set_input_address,
+                                     unsigned char set_write_enable,
+                                     unsigned int set_write_data){
 
     // The memory address must be 4 byte aligned
     input_address = set_input_address >> 2;
@@ -43,15 +49,26 @@ void DataMemory::ConfigureInput(unsigned int set_input_address,
 
 }
 
-void DataMemory::DoAction(){
+void DataMemory::DoReadAction(){
 
     if(input_address >= memory_size){
 
-        throw std::runtime_error("[DoAction]: memory  address out of bounds");
+        read_data = 0;
+        //throw std::runtime_error("[DoReadAction]: memory  address out of bounds");
+
+    }else{
+
+        read_data = memory_data[input_address];
+
     }
+}
 
-    read_data = memory_data[input_address];
+void DataMemory::DoWriteAction(){
 
+    if(input_address >= memory_size){
+
+        throw std::runtime_error("[DoWriteAction]: memory  address out of bounds");
+    }
 
     if(write_enable){
 
@@ -62,6 +79,21 @@ void DataMemory::DoAction(){
 
 unsigned int DataMemory::GetOutput(){
 
-
     return read_data;
+}
+
+unsigned int DataMemory::GetMemorySize(){
+
+    return memory_size;
+}
+
+void DataMemory::PrintContent(){
+
+    int i;
+
+    for(i = 0; i < (int) memory_size; ++i){
+
+        std::cout << "Pos " << i << ": " << (int) memory_data[i] << std::endl;
+
+    }
 }
