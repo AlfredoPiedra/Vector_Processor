@@ -15,7 +15,7 @@ InstructionMemory::InstructionMemory()
     instruction_counter = 0;
     source_code_limit = 1;
 
-    WriteInstructions("/home/alfredo/VectorProcessor/app.txt");
+    WriteInstructions("/home/alfredo/VectorProcessor/source_code/app.txt");
 
 }
 
@@ -31,10 +31,7 @@ InstructionMemory::InstructionMemory(unsigned int in_memory_size)
     // Allocate the memory
     memory_data.resize(memory_size);
 
-    instruction_counter = 0;
-    source_code_limit = 1;
-
-    WriteInstructions("/home/alfredo/VectorProcessor/app.txt");
+    WriteInstructions("/home/alfredo/VectorProcessor/source_code/app.txt");
 
 }
 
@@ -51,14 +48,14 @@ InstructionMemory::InstructionMemory(unsigned int in_memory_size,
     // Allocate the memory
     memory_data.resize(memory_size);
 
-    instruction_counter = 0;
-    source_code_limit = 1;
-
     WriteInstructions(user_program);
 
 }
 
 void InstructionMemory::WriteInstructions(std::string program){
+
+    instruction_counter = 0;
+    source_code_limit = 1;
 
     unsigned int memory_pos = 0;
 
@@ -74,6 +71,8 @@ void InstructionMemory::WriteInstructions(std::string program){
 
                 throw std::runtime_error("[WriteInstructions]: source code don't fit in the instruction memory");
             }
+
+
 
             memory_data[memory_pos] = (unsigned int) strtol(instruction.c_str(),0,16);
 

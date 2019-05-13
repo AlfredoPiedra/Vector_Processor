@@ -54,6 +54,9 @@ Execute::Execute(){
         vector_a_forward_source.push_back(Multiplexer4x1<unsigned char>());
         vector_b_forward_source.push_back(Multiplexer4x1<unsigned char>());
     }
+
+    // Threads used equal to the double of the number of processor
+    omp_set_num_threads(2*omp_get_num_procs());
 }
 
 void Execute::ConfigureInput(std::vector<unsigned char> set_execute_input){
@@ -262,48 +265,54 @@ void Execute::DoPositiveEdgeAction(){
 
     unsigned char unit;
 
-    for(unit = 0; unit < 8; ++unit){
+    #pragma omp parallel
+    {
+
+        #pragma omp for
+        for(unit = 0; unit < 8; ++unit){
 
 
-        vector_a_forward_source[unit].ConfigureInput(memory_forward_vector_data[unit],
-                                                     writeback_forward_vector_data[unit],
-                                                     execute_flags[15 + unit],  // Va byte
-                                                     0,                         // unused multiplexer input
-                                                     vector_a_forward);
-        vector_a_forward_source[unit].DoAction();
+            vector_a_forward_source[unit].ConfigureInput(memory_forward_vector_data[unit],
+                                                         writeback_forward_vector_data[unit],
+                                                         execute_flags[15 + unit],  // Va byte
+                                                         0,                         // unused multiplexer input
+                                                         vector_a_forward);
+            vector_a_forward_source[unit].DoAction();
 
-        vector_b_forward_source[unit].ConfigureInput(memory_forward_vector_data[unit],
-                                                     writeback_forward_vector_data[unit],
-                                                     execute_flags[23 + unit],  // Vb byte
-                                                     0,                         // unused multiplexer input
-                                                     vector_b_forward);
-        vector_b_forward_source[unit].DoAction();
+            vector_b_forward_source[unit].ConfigureInput(memory_forward_vector_data[unit],
+                                                         writeback_forward_vector_data[unit],
+                                                         execute_flags[23 + unit],  // Vb byte
+                                                         0,                         // unused multiplexer input
+                                                         vector_b_forward);
+            vector_b_forward_source[unit].DoAction();
 
-        vector_operand_source[unit].ConfigureInput(vector_b_forward_source[unit].GetOutput(),   // forward data
-                                                   execute_flags[11],          // f_immediate
-                                                   execute_flags[8]);         // immediate source
+            vector_operand_source[unit].ConfigureInput(vector_b_forward_source[unit].GetOutput(),   // forward data
+                                                       execute_flags[11],          // f_immediate
+                                                       execute_flags[8]);         // immediate source
 
-        vector_operand_source[unit].DoAction();
+            vector_operand_source[unit].DoAction();
 
-        alus[unit].ConfigureInput(vector_a_forward_source[unit].GetOutput(),   // forward data
-                                  vector_operand_source[unit].GetOutput(),     // vector operand b
-                                  execute_flags[12]);                          // alu control
+            alus[unit].ConfigureInput(vector_a_forward_source[unit].GetOutput(),   // forward data
+                                      vector_operand_source[unit].GetOutput(),     // vector operand b
+                                      execute_flags[12]);                          // alu control
 
-        alus[unit].DoAction();
+            alus[unit].DoAction();
 
-        shifters[unit].ConfigureInput(vector_a_forward_source[unit].GetOutput(),// forward_data
-                                      vector_operand_source[unit].GetOutput(),  // vector operand b
-                                      execute_flags[13]);                       // shifter control
+            shifters[unit].ConfigureInput(vector_a_forward_source[unit].GetOutput(),// forward_data
+                                          vector_operand_source[unit].GetOutput(),  // vector operand b
+                                          execute_flags[13]);                       // shifter control
 
-        shifters[unit].DoAction();
+            shifters[unit].DoAction();
 
-        vector_result_source[unit].ConfigureInput(alus[unit].GetOutput(),       // alu result
-                                                  shifters[unit].GetOutput(),   // shifter result
-                                                  vector_operand_source[unit].GetOutput(), // vector operand b
-                                                  0,                            // unused multiplexer input
-                                                  execute_flags[14]);           // vector result
+            vector_result_source[unit].ConfigureInput(alus[unit].GetOutput(),       // alu result
+                                                      shifters[unit].GetOutput(),   // shifter result
+                                                      vector_operand_source[unit].GetOutput(), // vector operand b
+                                                      0,                            // unused multiplexer input
+                                                      execute_flags[14]);           // vector result
 
-        vector_result_source[unit].DoAction();
+            vector_result_source[unit].DoAction();
+        }
+
     }
 
     OrganizeOutput();

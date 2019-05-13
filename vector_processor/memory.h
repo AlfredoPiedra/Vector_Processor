@@ -21,8 +21,6 @@ private:
     Register* memory_writeback;
     // ############### Output ##################
 
-    MemoryBank *memory_bank;
-
     Multiplexer2x1<unsigned int> *write_data_source;
 
     unsigned int address;
@@ -36,6 +34,8 @@ private:
     void DoNegativeEdgeAction();
 
 public:
+
+    MemoryBank *memory_bank;
 
     Memory();
 

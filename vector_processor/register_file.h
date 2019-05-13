@@ -15,9 +15,6 @@ private:
     // Total number of register in the register file
     unsigned char total_registers;
 
-    // Pointer to the array of register objects
-    std::vector<Register> register_file;
-
     // ############### Inputs ##################
     // Write enable signal
     unsigned char write_enable;
@@ -45,6 +42,9 @@ private:
     void WriteRegister(unsigned char register_number,
                        std::vector<unsigned char> data);
 public:
+
+    // Pointer to the array of register objects
+    std::vector<Register> register_file;
 
     // Constructors of the class
     RegisterFile();

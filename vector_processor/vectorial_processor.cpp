@@ -215,6 +215,7 @@ void VectorialProcessor::CompleteProcessing(){
 
     unsigned char thread;
 
+
     while(fetch_stage.GetSourceCodeLimit()){
 
         pthread_create(&stage_id[0],NULL,StartFetchStage,NULL);
@@ -239,49 +240,53 @@ void VectorialProcessor::CompleteProcessing(){
 
         }
 
-        usleep(1000);
         clock = !clock;
     }
 
-    decode_stage.PrintContent();
+    //decode_stage.PrintContent();
 }
 
 void VectorialProcessor::CycleProcessing(){
 
-    pthread_t stage_id[5];
+    int cycle;
 
-    unsigned char thread;
+    for(cycle = 0; cycle < 2; ++cycle){
 
-    pthread_create(&stage_id[0],NULL,StartFetchStage,NULL);
+        pthread_t stage_id[5];
 
-    pthread_create(&stage_id[1],NULL,StartDecodeStage,NULL);
+        unsigned char thread;
 
-    pthread_create(&stage_id[2],NULL,StartExecuteStage,NULL);
+        pthread_create(&stage_id[0],NULL,StartFetchStage,NULL);
 
-    pthread_create(&stage_id[3],NULL,StartMemoryStage,NULL);
+        pthread_create(&stage_id[1],NULL,StartDecodeStage,NULL);
 
-    pthread_create(&stage_id[4],NULL,StartWritebackStage,NULL);
+        pthread_create(&stage_id[2],NULL,StartExecuteStage,NULL);
 
-    for(thread = 0; thread < 5; ++thread){
+        pthread_create(&stage_id[3],NULL,StartMemoryStage,NULL);
 
-        pthread_join(stage_id[thread],NULL);
+        pthread_create(&stage_id[4],NULL,StartWritebackStage,NULL);
 
+        for(thread = 0; thread < 5; ++thread){
+
+            pthread_join(stage_id[thread],NULL);
+
+        }
+
+        if(!clock){
+
+             SolveHazards();
+        }
+
+        clock = !clock;
     }
-
-    if(!clock){
-
-        SolveHazards();
-
-    }
-
-    usleep(1000);
-    clock = !clock;
-
-    decode_stage.PrintContent();
-
 }
 
-void VectorialProcessor::ReadAllMemory(){
+void VectorialProcessor::LoadImage(std::string image_name){
+
+    memory_stage.memory_bank->LoadImage(image_name);
+}
+
+void VectorialProcessor::ReadAllMemory(std::string result_image_name){
 
     cv::Mat_<unsigned char> result_image(IMAGE_ROWS,IMAGE_COLS);
 
@@ -324,5 +329,11 @@ void VectorialProcessor::ReadAllMemory(){
         }
     }
 
-    cv::imwrite("/home/alfredo/VectorProcessor/result.png", result_image);
+    cv::imwrite(result_image_name, result_image);
+}
+
+void VectorialProcessor::ResetPC(){
+
+    fetch_stage.ResetPC();
+    clock = 0;
 }

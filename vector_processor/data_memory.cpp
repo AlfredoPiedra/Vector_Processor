@@ -65,12 +65,13 @@ void DataMemory::DoReadAction(){
 
 void DataMemory::DoWriteAction(){
 
-    if(input_address >= memory_size){
-
-        throw std::runtime_error("[DoWriteAction]: memory  address out of bounds");
-    }
-
     if(write_enable){
+
+        if(input_address >= memory_size){
+
+            throw std::runtime_error("[DoWriteAction]: memory  address out of bounds");
+
+        }
 
         memory_data[input_address] = write_data;
     }

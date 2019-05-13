@@ -2,6 +2,7 @@
 #define EXECUTE_H
 
 #include <vector>
+#include <omp.h>
 
 #include "register.h"
 #include "arithmetic_logic_unit.h"

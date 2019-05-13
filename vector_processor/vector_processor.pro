@@ -1,7 +1,11 @@
 TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += qt
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += main.cpp \
     register.cpp \
@@ -23,7 +27,9 @@ SOURCES += main.cpp \
     write_back.cpp \
     vectorial_processor.cpp \
     hazard_unit.cpp \
-    clock.cpp
+    clock.cpp \
+    main_window.cpp \
+    image_encryption.cpp
 
 HEADERS += \
     register.h \
@@ -45,9 +51,15 @@ HEADERS += \
     write_back.h \
     vectorial_processor.h \
     hazard_unit.h \
-    clock.h
+    clock.h \
+    main_window.h \
+    image_encryption.h
 
 CONFIG += link_pkgconfig
 PKGCONFIG += opencv
 
 LIBS += -pthread
+LIBS += -fopenmp
+
+FORMS += \
+    mainwindow.ui

@@ -17,7 +17,7 @@ MemoryBank::MemoryBank(){
     data_memory_a = new DataMemory(16384);
     data_memory_b = new DataMemory(16384);
 
-    WriteImageData();
+    WriteImageData("/home/alfredo/VectorProcessor/images/image.png");
 
 }
 
@@ -38,16 +38,14 @@ MemoryBank::MemoryBank(unsigned int memory_size){
     data_memory_a = new DataMemory(memory_size);
     data_memory_b = new DataMemory(memory_size);
 
-    WriteImageData();
+    WriteImageData("/home/alfredo/VectorProcessor/images/image.png");
 }
 
-void MemoryBank::WriteImageData(){
+void MemoryBank::WriteImageData(std::string image_full_path){
 
     cv::Mat_<unsigned char> image_data;
 
-    image_data = cv::imread("/home/alfredo/VectorProcessor/image.png",cv::IMREAD_GRAYSCALE);
-
-    cv::imwrite("/home/alfredo/VectorProcessor/result2.png", image_data);
+    image_data = cv::imread(image_full_path,cv::IMREAD_GRAYSCALE);
 
     if(!image_data.data) throw std::runtime_error("[WriteImageData]: could not find image");
 
@@ -211,4 +209,9 @@ unsigned int MemoryBank::GetOutputB(){
 unsigned char MemoryBank::GetOutputFlag(){
 
     return read_source;
+}
+
+void MemoryBank::LoadImage(std::string file_name){
+
+    WriteImageData(file_name);
 }

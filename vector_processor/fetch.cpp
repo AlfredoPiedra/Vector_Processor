@@ -12,7 +12,9 @@ Fetch::Fetch(){
     pc_plus_4 = new Adder();
 
     // Instance a memory for the instructions
-    instruction_memory = new InstructionMemory(61440);
+    instruction_memory = new InstructionMemory(76800);
+
+    fetch_stall = 0;
 }
 
 void Fetch::DoNegativeEdgeAction(){
@@ -64,12 +66,13 @@ void Fetch::DoStall(unsigned char stall){
 
     pc->SetEnable(stall);
     fetch_decode->SetEnable(stall);
+
+    fetch_stall = stall;
 }
 
 std::vector<unsigned char> Fetch::GetOutput(){
 
     return fetch_decode->GetOutput();
-
 }
 
 unsigned int Fetch::GetSourceCodeLimit(){
@@ -79,6 +82,23 @@ unsigned int Fetch::GetSourceCodeLimit(){
 
 void Fetch::LoadUserProgram(std::string path){
 
+    //instruction_memory->WriteInstructions(path);
+
     instruction_memory = new InstructionMemory(instruction_memory->GetMemorySize(),
                                                path);
+
+    std::vector<unsigned char> reset_to_zero;
+    reset_to_zero.resize(4);
+
+    pc->ConfigureInput(reset_to_zero);
+    pc->DoAction();
+}
+
+void Fetch::ResetPC(){
+
+    std::vector<unsigned char> reset_to_zero;
+    reset_to_zero.resize(4);
+
+    pc->ConfigureInput(reset_to_zero);
+    pc->DoAction();
 }

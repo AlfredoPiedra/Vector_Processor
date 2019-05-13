@@ -246,6 +246,7 @@ void Decode::DoPositiveEdgeAction(){
 
     }else{
 
+        //std::cout << "Flushing pipe ..." << std::endl;
         decode_execute->DoReset();
     }
 }

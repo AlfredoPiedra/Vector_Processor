@@ -2,6 +2,7 @@
 #define MEMORYBANK_H
 
 #include <iostream>
+#include <string>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgcodecs/imgcodecs_c.h>
 
@@ -11,8 +12,8 @@
 class MemoryBank
 {
 
-//private:
-public:
+private:
+
     // ############### Input ##################
     unsigned int input_addressA;
     unsigned int input_addressB;
@@ -31,7 +32,7 @@ public:
     DataMemory *data_memory_a;
     DataMemory *data_memory_b;
 
-    void WriteImageData();
+    void WriteImageData(std::string image_full_path);
 
     void MapWriteMemory(unsigned int address,
                         unsigned int data,
@@ -39,7 +40,7 @@ public:
 
     void MapReadMemory(unsigned int address);
 
-//public:
+public:
 
     MemoryBank();
 
@@ -57,6 +58,8 @@ public:
 
     void DoReadAction();
     void DoWriteAction();
+
+    void LoadImage(std::string file_name);
 
     unsigned int GetOutputA();
     unsigned int GetOutputB();

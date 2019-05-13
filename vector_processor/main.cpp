@@ -1,26 +1,17 @@
 #include <iostream>
+#include <unistd.h>
 
-using namespace std;
+#include <QApplication>
 
-#include "vectorial_processor.h"
+#include "main_window.h"
+#include "image_encryption.h"
 
-/*template <typename T>
-void showbits(T x) {
 
-    for(int i = (sizeof(T) * 8) - 1; i >= 0; i--) {
-       putchar(x & (1u << i) ? '1' : '0');
-    }
-    printf("\n");
-}*/
+int main(int argc, char **argv){
 
-int main(){
+   QApplication app(argc, argv);
 
-    VectorialProcessor asip;
-
-    asip.CompleteProcessing();
-
-    asip.ReadAllMemory();
-
-    return 0;
+   MainWindow mainWindow;
+   mainWindow.show();
+   return app.exec();
 }
-

@@ -20,9 +20,6 @@ private:
     Register *decode_execute;
     // ############### Output ##################
 
-    RegisterFile *scalar_registers;
-    RegisterFile *vector_registers;
-
     ControlUnit *control_unit;
 
     Multiplexer2x1<unsigned char>* operand_a_source;
@@ -55,6 +52,9 @@ private:
 public:
 
     Decode();
+
+    RegisterFile *scalar_registers;
+    RegisterFile *vector_registers;
 
     void ConfigureInput(std::vector<unsigned char> set_decode_instruction);
 

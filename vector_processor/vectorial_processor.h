@@ -12,19 +12,12 @@
 #include "write_back.h"
 #include "hazard_unit.h"
 
-#define IMAGE_ROWS 120
-#define IMAGE_COLS 120
+#define IMAGE_ROWS 320
+#define IMAGE_COLS 320
 
 class VectorialProcessor{
 
 private:
-
-    static Fetch fetch_stage;
-    static Decode decode_stage;
-    static Execute execute_stage;
-    static Memory memory_stage;
-    static WriteBack writeback_stage;
-    static HazardUnit hazard_unit;
 
     static unsigned char clock;
 
@@ -40,11 +33,22 @@ private:
 
 public:
 
+    static Fetch fetch_stage;
+    static Decode decode_stage;
+    static Execute execute_stage;
+    static Memory memory_stage;
+    static WriteBack writeback_stage;
+    static HazardUnit hazard_unit;
+
     VectorialProcessor();
 
     void LoadProgram(std::string file_name);
 
-    void ReadAllMemory();
+    void LoadImage(std::string image_name);
+
+    void ReadAllMemory(std::string result_image_name);
+
+    void ResetPC();
 
     void CompleteProcessing();
 

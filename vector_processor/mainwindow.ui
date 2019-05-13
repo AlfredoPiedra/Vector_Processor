@@ -1,0 +1,1516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>917</width>
+    <height>728</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_29">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_49">
+          <property name="text">
+           <string>Fetch</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_8">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_32">
+          <item>
+           <widget class="QLabel" name="label_54">
+            <property name="maximumSize">
+             <size>
+              <width>71</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>PC:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="F1">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_31">
+          <item>
+           <widget class="QLabel" name="label_56">
+            <property name="text">
+             <string>Instr:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="F2">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_30">
+          <item>
+           <widget class="QLabel" name="label_58">
+            <property name="text">
+             <string>Stall:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="F3">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_50">
+          <property name="text">
+           <string>Decode</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_41">
+          <item>
+           <widget class="QLabel" name="label_60">
+            <property name="text">
+             <string>Ctrl:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D1">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_46">
+          <item>
+           <widget class="QLabel" name="label_61">
+            <property name="text">
+             <string>Vd:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D2">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_12">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_44">
+          <item>
+           <widget class="QLabel" name="label_63">
+            <property name="text">
+             <string>Rd:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D3">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_13">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_43">
+          <item>
+           <widget class="QLabel" name="label_64">
+            <property name="text">
+             <string>F_imm:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D4">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_14">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_42">
+          <item>
+           <widget class="QLabel" name="label_65">
+            <property name="text">
+             <string>I_imm:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D5">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_15">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_40">
+          <item>
+           <widget class="QLabel" name="label_66">
+            <property name="text">
+             <string>M_imm:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D6">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_16">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_39">
+          <item>
+           <widget class="QLabel" name="label_67">
+            <property name="text">
+             <string>Ra:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D7">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_17">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_38">
+          <item>
+           <widget class="QLabel" name="label_72">
+            <property name="text">
+             <string>Rb:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D8">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_18">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_37">
+          <item>
+           <widget class="QLabel" name="label_73">
+            <property name="text">
+             <string>Va:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D9">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_19">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_33">
+          <item>
+           <widget class="QLabel" name="label_70">
+            <property name="text">
+             <string>Vb:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="D10">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_51">
+          <property name="text">
+           <string>Execute</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_20">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_36">
+          <item>
+           <widget class="QLabel" name="label_62">
+            <property name="text">
+             <string>Ctrl:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="E1">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_21">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_35">
+          <item>
+           <widget class="QLabel" name="label_69">
+            <property name="text">
+             <string>Addr:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="E2">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_54">
+          <item>
+           <widget class="QLabel" name="label_76">
+            <property name="text">
+             <string>Addr_4:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="E3">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_55">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Vd:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="E4">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_22">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_34">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Rd:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="E5">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_52">
+          <property name="text">
+           <string>Memory</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_23">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_47">
+          <item>
+           <widget class="QLabel" name="label_85">
+            <property name="text">
+             <string>Ctrl:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="M1">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_24">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_48">
+          <item>
+           <widget class="QLabel" name="label_86">
+            <property name="text">
+             <string>RD_A:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="M2">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_25">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_45">
+          <item>
+           <widget class="QLabel" name="label_88">
+            <property name="text">
+             <string>RD_B:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="M3">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_5">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QLabel" name="label_53">
+          <property name="text">
+           <string>Writeback</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="Line" name="line_26">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_53">
+          <item>
+           <widget class="QLabel" name="label_92">
+            <property name="text">
+             <string>Ctrl:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W1">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_27">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_52">
+          <item>
+           <widget class="QLabel" name="label_94">
+            <property name="text">
+             <string>Vd_Dir:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W2">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_28">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_50">
+          <item>
+           <widget class="QLabel" name="label_96">
+            <property name="text">
+             <string>Rd_Dir</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W3">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_29">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_51">
+          <item>
+           <widget class="QLabel" name="label_98">
+            <property name="text">
+             <string>Vd_dat:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W41">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W42">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="Line" name="line_30">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_49">
+          <item>
+           <widget class="QLabel" name="label_100">
+            <property name="text">
+             <string>Rd_dat:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="W5">
+            <property name="text">
+             <string>0x0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_28">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="text">
+               <string>R0:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R0">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_31">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>R1:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R1">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_32">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>R2:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R2">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_33">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>R3:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R3">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_34">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>R4:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R4">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_35">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>R5:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R5">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_36">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>R6:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R6">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_37">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QLabel" name="label_13">
+              <property name="text">
+               <string>R7:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="R7">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_6">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <item>
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>V0:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V0A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V0B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_38">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QLabel" name="label_19">
+              <property name="text">
+               <string>V1:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V1A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V1B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_39">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>V2:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V2A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V2B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_40">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <item>
+             <widget class="QLabel" name="label_23">
+              <property name="text">
+               <string>V3:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V3A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V3B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_41">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <item>
+             <widget class="QLabel" name="label_25">
+              <property name="text">
+               <string>V4:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V4A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V4B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_42">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <item>
+             <widget class="QLabel" name="label_27">
+              <property name="text">
+               <string>V5:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V5A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V5B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_43">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <item>
+             <widget class="QLabel" name="label_29">
+              <property name="text">
+               <string>V6:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V6A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V6B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_44">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_18">
+            <item>
+             <widget class="QLabel" name="label_31">
+              <property name="text">
+               <string>V7:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V7A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V7B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="Line" name="line_7">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_19">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_20">
+            <item>
+             <widget class="QLabel" name="label_33">
+              <property name="text">
+               <string>V8:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V8A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V8B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_45">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_21">
+            <item>
+             <widget class="QLabel" name="label_35">
+              <property name="text">
+               <string>V9:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V9A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V9B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_46">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_22">
+            <item>
+             <widget class="QLabel" name="label_37">
+              <property name="text">
+               <string>V10:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V10A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V10B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_47">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <item>
+             <widget class="QLabel" name="label_39">
+              <property name="text">
+               <string>V11:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V11A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V11B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_48">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_24">
+            <item>
+             <widget class="QLabel" name="label_41">
+              <property name="text">
+               <string>V12:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V12A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V12B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_49">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
+            <item>
+             <widget class="QLabel" name="label_43">
+              <property name="text">
+               <string>V13:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V13A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V13B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_50">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_26">
+            <item>
+             <widget class="QLabel" name="label_45">
+              <property name="text">
+               <string>V14:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V14A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V14B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line_51">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_27">
+            <item>
+             <widget class="QLabel" name="label_47">
+              <property name="text">
+               <string>V15:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V15A">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="V15B">
+              <property name="text">
+               <string>0x00000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>917</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

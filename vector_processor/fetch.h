@@ -13,7 +13,6 @@ class Fetch{
 
 private:
 
-        Register *pc;
         Register *fetch_decode;
 
         Adder *pc_plus_4;
@@ -26,6 +25,10 @@ private:
 
 public:
 
+    unsigned char fetch_stall;
+
+    Register *pc;
+
     Fetch();
 
     void DoAction(unsigned char clock);
@@ -37,6 +40,8 @@ public:
     unsigned int GetSourceCodeLimit();
 
     void LoadUserProgram(std::string path);
+
+    void ResetPC();
 };
 
 #endif // FETCH_H
